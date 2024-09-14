@@ -1,21 +1,46 @@
 <script setup>
-import Pagination from '@/Components/pagination.vue';
-import MagnifyingGlass from '@/Icons/MagnifyingGlass.vue';
 
+import Pagination  from "@/Components/pagination.vue";
+import MagnifyingGlassVue from "@/Icons/MagnifyingGlass.vue";
+import { usePage,Link } from "@inertiajs/vue3";
+
+
+
+
+
+
+// const props=
+// defineProps({
+//     students:{
+//         type: Object,
+//         Required:true,
+//     },
+// });
+//console.log(props.students);
 
 defineProps({
     students:{
         type: Object,
         Required:true,
     },
-})
 
+});
 
+console.log(usePage().props.students);
 
 </script>
 
 
+
+
 <template>
+    <Head title="Create Student" />
+
+<AuthenticatedLayout>
+    <template #header>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Create Student</h2>
+    </template>
+
 <div class="bg-gray-100 py-10">
     <div class="mx-auto max-w-7xl">
         <div class="px-4 sm:px-6 lg:px-8">
@@ -30,12 +55,12 @@ defineProps({
                 </div>
 
                 <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <a
-                        href="#"
+                    <Link
+                        :href="route('students.create')"
                         class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                     >
                         Add Student
-                    </a>
+                </Link>
                 </div>
             </div>
 
@@ -120,38 +145,39 @@ defineProps({
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
                                         >
-                                            <!-- {{ student.id }} -->
-                                              student id
+                                            {{ student.id }}
+                                          
                                         </td>
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
                                         >
-                                            <!-- {{student.name}} -->
-                                             student name
+                                            {{student.name}}
+                                        
                                         </td>
                                         <td
                                             class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                         >
-                                            <!-- {{student.email}} -->
-                                             student email
+                                            {{student.email}}
+                                    
                                         </td>
                                         <td
                                             class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                         >
-                                            <!-- {{student.class.name}} -->
-                                             class name
+                                            {{student.class.name}}
+                                         
                                         </td>
                                         <td
                                             class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                         >
-                                            <!-- {{student.section.name}} -->
-                                             section name
+                                            {{student.section.name}}
+                                           
                                         </td>
                                         <td
                                             class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                         >
-                                        <!-- {{student.created_at}} -->
-                                         created at
+
+                                        {{student.created_at}}
+                                   
                                             
                                         </td>
 
@@ -174,12 +200,12 @@ defineProps({
                                 </tbody>
                             </table>
                         </div>
-                        <Pagination />
-                         // Page Link
+                        <Pagination :data="students"/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</AuthenticatedLayout>
 </template>
