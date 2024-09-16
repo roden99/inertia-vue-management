@@ -8,6 +8,7 @@ use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use App\Models\Classes;
 use App\Http\Requests\api\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 
 
 
@@ -48,7 +49,32 @@ class StudentController extends Controller
 
     }
 
+    public function edit(Student $student)
+    {
+        $classes=ClassesResource::collection(Classes::all());
 
+        return inertia('Students/Edit', [
+            'classes'=>$classes,
+            'student'=>StudentResource::make($student),
+        ]);
+
+    }
+
+    public function update(UpdateStudentRequest $request, Student $student)
+    {
+
+        $student->update($request->validated());
+        return redirect()->route('students.index');
+
+
+    }
+
+    public function destroy(student $student)
+    {
+
+        $student->delete();
+        return redirect()->route('students.index');
+    }
 
 
 
