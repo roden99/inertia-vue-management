@@ -1,3 +1,5 @@
+
+
 <script setup>
 import Pagination from "@/Components/pagination.vue";
 import MagnifyingGlass from "@/Icons/MagnifyingGlass.vue";
@@ -5,10 +7,7 @@ import { Head, usePage, Link, useForm, router } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { ref, computed, watch } from "vue";
 import DashboardLayout from "@/Pages/DashboardLayout.vue";
-
-
-
-
+import InputError from "@/Components/InputError.vue";
 
 // const props=
 // defineProps({
@@ -73,16 +72,61 @@ const createStudent = ref(false);
   {{ search }}
   <Head title="Create Student" />
 
-<DashboardLayout>
+  <DashboardLayout>
+    <!-- Create Student Module -->
+    <v-dialog max-width="500" v-model="createStudent">
+      <v-card title="Student Data">
+        <v-card-text>
+          <form @submit.prevent="createStudent">
+            <v-container>
+              <v-form>
+                <!-- Name Input -->
+                <v-text-field
+                  v-model="name"
+                  label="Name"
+                  outlined
+                  required
+                ></v-text-field>
 
-    <v-dialog max-width="500" v-model="dialogvisible">
- 
+                <!-- Email Input -->
+                <v-text-field
+                  v-model="email"
+                  label="Email"
+                  outlined
+                  required
+                ></v-text-field>
 
- 
-    <v-card title="Dialog">
-      <v-card-text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </v-card-text>
+                <!-- Class Select -->
+                <v-select
+                  v-model="selectedClass"
+                  :items="classes"
+                  label="Class"
+                  outlined
+                  required
+                ></v-select>
+
+                <!-- Section Select -->
+                <v-select
+                  v-model="selectedSection"
+                  :items="sections"
+                  label="Section"
+                  outlined
+                  required
+                ></v-select>
+                <v-row class="mt-4" justify="end">
+                  <v-spacer></v-spacer>
+                  <!-- This pushes buttons to the right -->
+                  <v-btn color="secondary" class="ml-2" @click="cancelForm"
+                    >Cancel</v-btn
+                  >
+                  <v-btn color="primary" class="ml-2" @click="submitForm"
+                    >Save</v-btn
+                  >
+                </v-row>
+              </v-form>
+            </v-container>
+          </form>
+        </v-card-text>
 
         <!-- <v-card-actions>
           <v-spacer></v-spacer>
@@ -98,32 +142,24 @@ const createStudent = ref(false);
       </h2>
     </template>
 
-<div class="bg-gray-100 py-10">
-    <div class="mx-auto max-w-7xl">
-        <div class="px-4 sm:px-6 lg:px-8">
-            <div class="sm:flex sm:items-center">
-                <div class="sm:flex-auto">
-                    <h1 class="text-xl font-semibold text-gray-900">
-                        Students
-                    </h1>
-                    <p class="mt-2 text-sm text-gray-700">
-                        A list of all the Students.
-                    </p>
-                </div>
+    <div class="px-4 sm:px-6 lg:px-8">
+      <div class="sm:flex sm:items-center">
+        <div class="sm:flex-auto">
+          <h1 class="text-xl font-semibold text-gray-900">Students</h1>
+          <p class="mt-2 text-sm text-gray-700">A list of all the Students.</p>
+        </div>
 
-                <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                    <Link
-                        :href="route('students.create')"
-                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                    >
-                        Add Student
-                </Link>
-                
-                <v-btn @click="dialogvisible=true">New</v-btn>
+        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+          <Link
+            :href="route('students.create')"
+            class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+          >
+            Add Student
+          </Link>
 
-                
-                </div>
-            </div>
+          <v-btn @click="createStudent = true">Add Student</v-btn>
+        </div>
+      </div>
 
       <div class="flex flex-col justify-between sm:flex-row mt-6">
         <div class="relative text-sm text-gray-800 col-span-3">
@@ -250,7 +286,7 @@ const createStudent = ref(false);
             <Pagination :data="students" />
           </div>
         </div>
+      </div>
     </div>
-</div>
-</DashboardLayout>
+  </DashboardLayout>
 </template>

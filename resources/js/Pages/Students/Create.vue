@@ -11,7 +11,6 @@ import DashboardLayout from "@/Pages/DashboardLayout.vue";
 defineProps(
     {
         classes:{
-
             type:Object,
             required:true,
         }
@@ -49,8 +48,6 @@ const getSections=(classId)=>{
 const createStudent=()=>{
 form.post(route('students.store'))
 };
-
-
 
 </script>
 
