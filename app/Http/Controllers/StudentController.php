@@ -15,15 +15,32 @@ use App\Http\Requests\UpdateStudentRequest;
 class StudentController extends Controller
 {
     
-    public function index()
-    {
-        // Fetch all students and transform them using StudentResource
-        $students = StudentResource::collection(Student::paginate(10));
+    public function index(Request $request)
+    { 
+        $studentQuery=Student::query();
 
+        $this->applySearch($studentQuery,$request->search);
+
+        $students = StudentResource::collection
+        ($studentQuery->paginate(10));
+        
         // Return the Inertia response with the students data
         return inertia('Students/Index', [
             'students' => $students,
+            'search'=>$request->search ?? '',
         ]);
+    }
+
+    protected function applySearch($query,$search)
+    {
+
+        return $query->when($search,function($query,$search)
+        {
+            $query->where('name','like','%'.$search.'%')
+            ->orWhere('email','like','%'.$search.'%');
+        });
+
+
     }
 
 
@@ -33,6 +50,7 @@ class StudentController extends Controller
 
         return inertia('Students/Create', [
             'classes'=> $classes,
+            
         ]
         );
 

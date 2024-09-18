@@ -2,8 +2,10 @@
 
 import Pagination  from "@/Components/pagination.vue";
 import MagnifyingGlass from "@/Icons/MagnifyingGlass.vue";
-import { Head,usePage,Link,useForm } from "@inertiajs/vue3";
+import { Head,usePage,Link,useForm,router } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import {ref,computed,watch} from "vue";
+import DashboardLayout from "@/Pages/DashboardLayout.vue";
 
 
 
@@ -18,7 +20,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 // });
 //console.log(props.students);
 
-defineProps({
+defineProps
+({
     students:{
         type: Object,
         Required:true,
@@ -27,11 +30,38 @@ defineProps({
 });
 
 const deleteForm=useForm({});
+let search=ref(usePage().props.search),pageNumber=ref(1);
+
+let studentsUrl = computed(() => {
+    let url = new URL(route("students.index"));
+    url.searchParams.append("page", pageNumber.value); // Use `.value` for reactive `ref`
+    
+    if (search.value) {
+        url.searchParams.append("search", search.value); // Append search param if it exists
+    }
+    
+    return url; // Return the URL
+});
+
+watch(
+    ()=>studentsUrl.value,
+    (updatedStudentsUrl)=>{
+        router.visit(updatedStudentsUrl,{
+
+            preserveScroll:true,
+            preserveState:true,
+            replace:true,
+
+        });
+    }
+);
+
+    
 
 const deleteStudent=(studentid)=>
 {
 
-    if(confirm('Are you sure you want to delete this student?')){
+    if(confirms('Are you sure you want to delete this student?')){
 
         deleteForm.delete(route('students.destroy',studentid));
 
@@ -39,7 +69,14 @@ const deleteStudent=(studentid)=>
 
 }
 
+
+
+
+
+
 //console.log(usePage().props.students);
+
+const dialogvisible=ref(false);
 
 </script>
 
@@ -47,9 +84,33 @@ const deleteStudent=(studentid)=>
 
 
 <template>
+
+    {{search}}
     <Head title="Create Student" />
 
-<AuthenticatedLayout>
+<DashboardLayout>
+
+    <v-dialog max-width="500" v-model="dialogvisible">
+ 
+
+ 
+    <v-card title="Dialog">
+      <v-card-text>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+
+        <v-btn
+          text="Close Dialog"
+          @click="isActive.value = false"
+        ></v-btn>
+      </v-card-actions>
+    </v-card>
+
+</v-dialog>
+
     <template #header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">Create Student</h2>
     </template>
@@ -74,6 +135,10 @@ const deleteStudent=(studentid)=>
                     >
                         Add Student
                 </Link>
+                
+                <v-btn @click="dialogvisible=true">New</v-btn>
+
+                
                 </div>
             </div>
 
@@ -86,6 +151,7 @@ const deleteStudent=(studentid)=>
                     </div>
 
                     <input
+                    v-model="search"
                         type="text"
                         autocomplete="off"
                         placeholder="Search students data..."
@@ -222,5 +288,5 @@ const deleteStudent=(studentid)=>
         </div>
     </div>
 </div>
-</AuthenticatedLayout>
+</DashboardLayout>
 </template>

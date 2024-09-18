@@ -19,6 +19,10 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
-        "vue-router": "^4.4.5"
+        "@inertiajs/inertia-vue3": "^0.6.0",
+        "@mdi/font": "^7.4.47",
+        "@mdi/js": "^7.4.47",
+        "vue-router": "^4.4.5",
+        "vuetify": "^3.7.2"
     }
 }
