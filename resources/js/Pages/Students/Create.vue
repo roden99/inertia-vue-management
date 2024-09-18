@@ -3,6 +3,7 @@ import InputError from '@/Components/InputError.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head,useForm } from '@inertiajs/vue3';
 import {watch,ref} from "vue";
+import DashboardLayout from "@/Pages/DashboardLayout.vue";
 
 // import axios from 'axios';
 
@@ -45,10 +46,10 @@ const getSections=(classId)=>{
 }
 
 
-
 const createStudent=()=>{
 form.post(route('students.store'))
 };
+
 
 
 </script>
@@ -56,7 +57,7 @@ form.post(route('students.store'))
 <template>
     <Head title="Create Student" />
 
-    <AuthenticatedLayout>
+    <DashboardLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Create Student</h2>
         </template>
@@ -185,5 +186,5 @@ form.post(route('students.store'))
     </div>
 </div>
             </div>
-    </AuthenticatedLayout>
+        </DashboardLayout>
 </template>

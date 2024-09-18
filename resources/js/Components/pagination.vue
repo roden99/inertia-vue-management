@@ -51,7 +51,7 @@ const updatePageNumber=(link)=>
                                 results
                             </p>
                         </div>
-                        <div>
+                        <div class="flex justify-end flex-1">
                             <nav
                                 class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
                                 aria-label="Pagination"

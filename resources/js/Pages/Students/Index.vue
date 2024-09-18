@@ -7,10 +7,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {ref,computed,watch} from "vue";
 import DashboardLayout from "@/Pages/DashboardLayout.vue";
 
-
-
-
-
 // const props=
 // defineProps({
 //     students:{
@@ -91,9 +87,6 @@ const dialogvisible=ref(false);
 <DashboardLayout>
 
     <v-dialog max-width="500" v-model="dialogvisible">
- 
-
- 
     <v-card title="Dialog">
       <v-card-text>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -115,8 +108,7 @@ const dialogvisible=ref(false);
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">Create Student</h2>
     </template>
 
-<div class="bg-gray-100 py-10">
-    <div class="mx-auto max-w-7xl">
+
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="sm:flex sm:items-center">
                 <div class="sm:flex-auto">
@@ -136,7 +128,7 @@ const dialogvisible=ref(false);
                         Add Student
                 </Link>
                 
-                <v-btn @click="dialogvisible=true">New</v-btn>
+                <v-btn @click="dialogvisible=true">Add Student</v-btn>
 
                 
                 </div>
@@ -286,7 +278,6 @@ const dialogvisible=ref(false);
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    
 </DashboardLayout>
 </template>

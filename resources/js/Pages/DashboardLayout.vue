@@ -43,13 +43,13 @@
                     'hover-list-item': true,
                     'selected-list-item': isCurrentRoute('/unscanned'),
                 }" prepend-icon="mdi-scanner-off" link @click="$inertia.visit('/unscanned')">
-                    <v-list-item-title>Suppliers</v-list-item-title>
+                    <v-list-item-title>Test</v-list-item-title>
                 </v-list-item>
                 <v-list-item :class="{
                     'hover-list-item': true,
                     'selected-list-item': isCurrentRoute('/users'),
                 }" prepend-icon="mdi-account-key" link @click="$inertia.visit('/users')">
-                    <v-list-item-title>Products</v-list-item-title>
+                    <v-list-item-title>Test</v-list-item-title>
                 </v-list-item>
                 <v-list-item :class="{
                     'hover-list-item': true,
