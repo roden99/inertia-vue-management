@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ClassesController;
 
 Route::get('/', function () {
     return Inertia::render('Auth/Login', [
@@ -25,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('students',StudentController::class);
+    Route::resource('classes',ClassesController::class);
 
 
 

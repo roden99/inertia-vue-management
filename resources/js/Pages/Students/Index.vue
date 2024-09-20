@@ -5,25 +5,17 @@ import Pagination from "@/Components/pagination.vue";
 import MagnifyingGlass from "@/Icons/MagnifyingGlass.vue";
 import { Head, usePage, Link, useForm, router } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch} from "vue";
 import DashboardLayout from "@/Pages/DashboardLayout.vue";
 import InputError from "@/Components/InputError.vue";
 
-// const props=
-// defineProps({
-//     students:{
-//         type: Object,
-//         Required:true,
-//     },
-// });
-//console.log(props.students);
 
 defineProps({
-  students: {
-    type: Object,
-    Required: true,
-  },
+    classes: Array,
+    students:Array,
 });
+
+
 
 const form = useForm({
   name: "",
@@ -33,6 +25,7 @@ const form = useForm({
 });
 
 const deleteForm = useForm({});
+const createStudent = ref(false);
 let search = ref(usePage().props.search),
   pageNumber = ref(1);
 
@@ -64,15 +57,12 @@ const deleteStudent = (studentid) => {
   }
 };
 
-//console.log(usePage().props.students);
-const createStudent = ref(false);
 </script>
-
 <template>
-  {{ search }}
+  <!-- {{ search }} -->
   <Head title="Create Student" />
-
   <DashboardLayout>
+
     <!-- Create Student Module -->
     <v-dialog max-width="500" v-model="createStudent">
       <v-card title="Student Data">
@@ -142,7 +132,7 @@ const createStudent = ref(false);
       </h2>
     </template>
 
-    <div class="px-4 sm:px-6 lg:px-8">
+     <div class="px-4 sm:px-6 lg:px-8">
       <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
           <h1 class="text-xl font-semibold text-gray-900">Students</h1>
@@ -150,14 +140,9 @@ const createStudent = ref(false);
         </div>
 
         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <Link
-            :href="route('students.create')"
-            class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-          >
-            Add Student
-          </Link>
 
-          <v-btn @click="createStudent = true">Add Student</v-btn>
+          <v-btn v-btn color="primary" class="ml-2" 
+          @click="createStudent = true">Add Student</v-btn>
         </div>
       </div>
 
