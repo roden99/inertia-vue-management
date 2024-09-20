@@ -11,7 +11,6 @@ use App\Http\Requests\api\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 
 
-
 class StudentController extends Controller
 {
     
@@ -19,16 +18,19 @@ class StudentController extends Controller
     { 
         $studentQuery=Student::query();
 
-        $this->applySearch($studentQuery,$request->search);
+       // $classes= ClassesResource::collection(Classes::all());
 
-        $students = StudentResource::collection
+        $this->applySearch($studentQuery,$request->search);
+        $classes = Classes::all();
+       $students = StudentResource::collection
         ($studentQuery->paginate(10));
         
         // Return the Inertia response with the students data
         return inertia('Students/Index', [
             'students' => $students,
             'search'=>$request->search ?? '',
-        ]);
+           'classes'=> $classes,
+        ]); 
     }
 
     protected function applySearch($query,$search)
