@@ -19,7 +19,7 @@ class StudentController extends Controller
         $studentQuery=Student::query();
 
        // $classes= ClassesResource::collection(Classes::all());
-
+       
         $this->applySearch($studentQuery,$request->search);
         $classes = Classes::all();
        $students = StudentResource::collection

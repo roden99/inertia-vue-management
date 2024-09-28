@@ -27,6 +27,11 @@
         <v-navigation-drawer v-model="drawer" app class="bg-black" theme="dark">
             <!-- Add navigation links here -->
             <v-list>
+
+
+        
+
+                
                 <v-list-item :class="{
                     'hover-list-item': true,
                     'selected-list-item': isCurrentRoute('/dashboard'),
@@ -37,31 +42,100 @@
                     'hover-list-item': true,
                     'selected-list-item': isCurrentRoute('/students'),
                 }" prepend-icon="mdi-file-document" link @click="$inertia.visit('/students')">
-                    <v-list-item-title>Students</v-list-item-title>
+                    <v-list-item-title>Doctors</v-list-item-title>
                 </v-list-item>
                 <v-list-item :class="{
                     'hover-list-item': true,
                     'selected-list-item': isCurrentRoute('/unscanned'),
                 }" prepend-icon="mdi-scanner-off" link @click="$inertia.visit('/unscanned')">
-                    <v-list-item-title>Test</v-list-item-title>
+                    <v-list-item-title>Deliveries</v-list-item-title>
                 </v-list-item>
                 <v-list-item :class="{
                     'hover-list-item': true,
                     'selected-list-item': isCurrentRoute('/users'),
                 }" prepend-icon="mdi-account-key" link @click="$inertia.visit('/users')">
-                    <v-list-item-title>Test</v-list-item-title>
+                    <v-list-item-title>Inventory</v-list-item-title>
                 </v-list-item>
+                <v-list-item :class="{
+                    'hover-list-item': true,    
+                    'selected-list-item': isCurrentRoute('/employees'),
+                }" prepend-icon="mdi-account-tie" link @click="$inertia.visit('/employees')">
+                    <v-list-item-title>Point of Sales</v-list-item-title>
+                </v-list-item>
+              
+                <!-- mdi-database-arrow-right -->
+
+
+                <v-list-group ::class="{
+                    'hover-list-item': true,}"
+                    prepend-icon="mdi-account-tie"
+                value="Settings">
+          <template v-slot:activator="{ props }">
+            <v-list-item v-bind="props" title="Settings"></v-list-item>
+          </template>
+
+          <v-list-item :class="{
+                    'hover-list-item': true,
+                    'selected-list-item': isCurrentRoute('/employees'),
+                }"  link @click="$inertia.visit('/employees')">
+                    <v-list-item-title>Users</v-list-item-title>
+                </v-list-item>
+
+                <v-list-item :class="{
+                    'hover-list-item': true,
+                    'selected-list-item': isCurrentRoute('/unscanned'),
+                }" link @click="$inertia.visit('/unscanned')">
+                    <v-list-item-title>Suppliers</v-list-item-title>
+                </v-list-item>
+
                 <v-list-item :class="{
                     'hover-list-item': true,
                     'selected-list-item': isCurrentRoute('/employees'),
-                }" prepend-icon="mdi-account-tie" link @click="$inertia.visit('/employees')">
-                    <v-list-item-title>Users</v-list-item-title>
+                }"  link @click="$inertia.visit('/employees')">
+                    <v-list-item-title>Products</v-list-item-title>
                 </v-list-item>
-                <v-list-item class="list-item logout-item" prepend-icon="mdi-logout" link @click="logout">
+
+            
+
+            </v-list-group>
+
+            <v-list-group ::class="{
+                    'hover-list-item': true,}"
+                    prepend-icon="mdi-account-tie"
+                value="Reports">
+          <template v-slot:activator="{ props }">
+            <v-list-item v-bind="props" title="Reports"></v-list-item>
+          </template>
+
+          <v-list-item :class="{
+                    'hover-list-item': true,
+                    'selected-list-item': isCurrentRoute('/employees'),
+                }"  link @click="$inertia.visit('/employees')">
+                    <v-list-item-title>Daily Sales</v-list-item-title>
+                </v-list-item>
+
+                <v-list-item :class="{
+                    'hover-list-item': true,
+                    'selected-list-item': isCurrentRoute('/employees'),
+                }"  link @click="$inertia.visit('/employees')">
+                    <v-list-item-title>Monthly Report</v-list-item-title>
+                </v-list-item>
+
+                <v-list-item :class="{
+                    'hover-list-item': true,
+                    'selected-list-item': isCurrentRoute('/employees'),
+                }"  link @click="$inertia.visit('/employees')">
+                    <v-list-item-title>Delivery Reports </v-list-item-title>
+                </v-list-item>
+
+            
+
+            </v-list-group>
+            <v-list-item class="list-item logout-item" prepend-icon="mdi-logout" link @click="logout">
                     <v-list-item-title>Logout</v-list-item-title>
                 </v-list-item>
-                <!-- mdi-database-arrow-right -->
             </v-list>
+        
         </v-navigation-drawer>
 
         <v-main>

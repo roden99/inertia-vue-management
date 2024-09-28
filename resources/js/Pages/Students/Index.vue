@@ -7,27 +7,66 @@ import { Head, usePage, Link, useForm, router } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { ref, computed, watch} from "vue";
 import DashboardLayout from "@/Pages/DashboardLayout.vue";
+import Swal from 'sweetalert2';
 import InputError from "@/Components/InputError.vue";
 
 
-defineProps({
-    classes: Array,
-    students:Array,
-});
 
+
+
+
+const props=
+defineProps({
+  classes: {
+    type: Array,  // Accepts both array and object
+  },
+   
+    students: {
+    type: [Array, Object],  // Accepts both array and object
+    required: true
+  },
+});
+// console.log(props);
 
 
 const form = useForm({
   name: "",
   email: "",
-  class_id: "",
+  class_id: "", 
   section_id: "",
 });
 
+
+
+watch( 
+    ()=>form.class_id,
+    (newValue)=> {
+      getSections(newValue)
+     
+    }
+
+)
+
+let sections = ref([]);
+
+const getSections=(classId)=>{
+    axios.get("/api/sections?class_id="+classId).then((response)=>
+{
+
+  form.section_id=null
+
+   sections.value = response.data;
+   //console.log(response.data);
+
+});
+}
+
+
+
 const deleteForm = useForm({});
-const createStudent = ref(false);
+const addStudent = ref(false);
 let search = ref(usePage().props.search),
-  pageNumber = ref(1);
+pageNumber = ref(1);
 
 let studentsUrl = computed(() => {
   let url = new URL(route("students.index"));
@@ -39,6 +78,7 @@ let studentsUrl = computed(() => {
 
   return url; // Return the URL
 });
+
 
 watch(
   () => studentsUrl.value,
@@ -57,59 +97,121 @@ const deleteStudent = (studentid) => {
   }
 };
 
+
+
+const createStudent = () => {
+  addStudent.value=false;
+  Swal.fire({
+  title: "Are you sure?",
+  text: "Do you want to proceed with this action?",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes",
+  cancelButtonText: "No",
+}).then((result) => {
+  if (result.isConfirmed) {
+    // Action to take when Yes is clicked
+    form.post(route('students.store'), {
+    onSuccess: () => {
+      Swal.fire({
+        title: "Success!",
+        text: "The student has been created successfully.",
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK",
+      });
+     addStudent.value=false;
+    },
+    onError: () => {
+      Swal.fire({
+        title: "Error!",
+        text: "There was a problem creating the student.",
+        icon: "error",
+        confirmButtonColor: "#d33",
+        confirmButtonText: "Try Again",
+      });
+    },
+  });
+  } else {
+    // Action to take when No is clicked (optional)
+    // Swal.fire({
+    //   title: "Cancelled",
+    //   text: "You have chosen not to proceed.",
+    //   icon: "error",
+    //   showConfirmButton:false,
+    //   timer:1500,
+    // });
+    addStudent.value=true;
+  }
+});
+
+};
+
+
+
+//console.log(props.classes);
+
+
 </script>
 <template>
-  <!-- {{ search }} -->
-  <Head title="Create Student" />
+  <!-- {{props.classes }} -->
+  <Head title="Create Doctor" />
   <DashboardLayout>
 
     <!-- Create Student Module -->
-    <v-dialog max-width="500" v-model="createStudent">
-      <v-card title="Student Data">
+    <v-dialog max-width="500" v-model="addStudent">
+      <v-card title="Doctor Data">
         <v-card-text>
           <form @submit.prevent="createStudent">
             <v-container>
+
               <v-form>
-                <!-- Name Input -->
                 <v-text-field
-                  v-model="name"
+                  v-model="form.name"
                   label="Name"
                   outlined
                   required
                 ></v-text-field>
 
-                <!-- Email Input -->
                 <v-text-field
-                  v-model="email"
+                  v-model="form.email"
                   label="Email"
                   outlined
                   required
                 ></v-text-field>
 
-                <!-- Class Select -->
                 <v-select
-                  v-model="selectedClass"
-                  :items="classes"
+                v-model="form.class_id"
+                id="class_id"
+                  :items="props.classes"
+                  item-title="name"
+                  item-value="id"
                   label="Class"
                   outlined
                   required
                 ></v-select>
-
-                <!-- Section Select -->
+                
                 <v-select
-                  v-model="selectedSection"
-                  :items="sections"
+                v-model="form.section_id"
+                id="section_id"
+                  :items="sections.data"
+                  item-title="name"
+                  item-value="id"
                   label="Section"
                   outlined
                   required
                 ></v-select>
+
                 <v-row class="mt-4" justify="end">
                   <v-spacer></v-spacer>
-                  <!-- This pushes buttons to the right -->
-                  <v-btn color="secondary" class="ml-2" @click="cancelForm"
+                 
+                  <v-btn color="secondary" class="ml-2"
                     >Cancel</v-btn
                   >
-                  <v-btn color="primary" class="ml-2" @click="submitForm"
+                  <v-btn 
+                  color="primary" class="ml-2" @click="createStudent"
                     >Save</v-btn
                   >
                 </v-row>
@@ -128,21 +230,22 @@ const deleteStudent = (studentid) => {
 
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Create Student
+        Create Doctor
       </h2>
     </template>
 
      <div class="px-4 sm:px-6 lg:px-8">
       <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
-          <h1 class="text-xl font-semibold text-gray-900">Students</h1>
-          <p class="mt-2 text-sm text-gray-700">A list of all the Students.</p>
+          <h1 class="text-xl font-semibold text-gray-900">Doctors</h1>
+          <p class="mt-2 text-sm text-gray-700">A list of all the Doctors.</p>
         </div>
 
         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
 
           <v-btn v-btn color="primary" class="ml-2" 
-          @click="createStudent = true">Add Student</v-btn>
+          @click="addStudent = true">Add Doctor
+        </v-btn>
         </div>
       </div>
 
