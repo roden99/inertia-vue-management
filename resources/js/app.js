@@ -1,8 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
 import "@mdi/font/css/materialdesignicons.css";
-// import '@sweetalert2/theme-material-ui/material-ui.scss';
-// import 'sweetalert2/dist/sweetalert2.min.css';
+import '@sweetalert2/theme-material-ui/material-ui.scss';
+import 'sweetalert2/dist/sweetalert2.min.css';
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
@@ -12,7 +12,7 @@ import vuetify from './vuetify'; // Import vuetify.js
 import 'vuetify/styles'; // Import Vuetify styles
 // import pdfMake from 'pdfmake/build/pdfmake'; // Corrected import statement for pdfMake
 // import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-// import Swal from 'sweetalert2/dist/sweetalert2.js';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 // import printJS from 'print-js';
 // import { PDFPlugin } from 'vue3-pdfmake';
 // import { usePDF } from 'vue3-pdfmake';
@@ -22,7 +22,7 @@ import axios from 'axios';
 const appName = import.meta.env.VITE_APP_NAME || 'Animal Genetics Resource Information System';
 // pdfMake.vfs = pdfFonts.pdfMake.vfs;
 window.axios = axios
-// window.swal = Swal
+window.swal = Swal
 // window.moment = moment
 // window.numeral = numeral
 // window.usePDF = usePDF
